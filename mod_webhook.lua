@@ -3,8 +3,10 @@
 module:log("debug", "module loading for %s", module:get_host())
 
 local http = require("net.http")
+local jid = require("util.jid")
 
 local url = module:get_option_string("webhook_url")
+local desired_from = jid.bare(module:get_option_string("webhook_messages_from"))
 
 function on_message(event)
    module:log("info", "XXXX Received: %s", tostring(event.stanza));
@@ -16,8 +18,9 @@ function on_message(event)
    end
 
    -- only process messages from Michael
-   if not string.find(event.stanza.attr.from,"^michael@ndrix.org") then
-      module:log("info", "XXXX skipping non-Michael message");
+   local from = jid.bare(event.stanza.attr.from)
+   if from ~= desired_from then
+      module:log("debug", "ignoring message that's not from the desired JID");
       return
    end
 
