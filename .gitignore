@@ -1,3 +1,6 @@
+# Emacs backup files
+*~
+
 # Compiled Lua sources
 luac.out
 
@@ -29,6 +32,7 @@ luac.out
 *.dll
 *.so
 *.so.*
+
 *.dylib
 
 # Executables
