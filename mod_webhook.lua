@@ -27,14 +27,15 @@ function on_message(event)
    -- execute the webhook
    module:log("debug", "running webhook");
    local raw_to = event.stanza.attr.to
+   local raw_body = event.stanza:get_child("body"):get_text()
    local cb = function (response,code,request)
       module:log("debug", "webhook returned HTTP response %d", code)
    end
    local opts = {
        body = http.formencode({
-	   from = raw_from;
-          to = raw_to;
-	   message = "a pretend message";
+           from = raw_from;
+           to = raw_to;
+           message = raw_body;
        });
    }
    http.request(url, opts, cb)
