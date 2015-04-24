@@ -18,9 +18,9 @@ function on_message(event)
    end
 
    -- only process messages from Michael
-   local from = jid.bare(event.stanza.attr.from)
-   if from ~= desired_from then
-      module:log("debug", "ignoring message that's not from the desired JID");
+   local raw_from = event.stanza.attr.from
+   local bare_from = jid.bare(raw_from)
+   if bare_from ~= desired_from then
       return
    end
 
