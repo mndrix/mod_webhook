@@ -1,6 +1,6 @@
 -- POST a copy of each chat message to a URL
 
-module:log("debug", "module loading for %s", module:get_host())
+module:log("debug", "module loading")
 
 local http = require("net.http")
 local jid = require("util.jid")
