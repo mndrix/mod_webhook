@@ -24,12 +24,18 @@ function on_message(event)
       return
    end
 
-   module:log("info", "XXXX triggering webhook");
+   -- execute the webhook
+   module:log("debug", "running webhook");
+   local raw_to = event.stanza.attr.to
    local cb = function (response,code,request)
-      module:log("info", "XXXX got HTTP response %d", code)
+      module:log("debug", "webhook returned HTTP response %d", code)
    end
    local opts = {
-      body = http.formencode({to="foo@example.com",message="a pretend message"});
+       body = http.formencode({
+	   from = raw_from;
+          to = raw_to;
+	   message = "a pretend message";
+       });
    }
    http.request(url, opts, cb)
 end
